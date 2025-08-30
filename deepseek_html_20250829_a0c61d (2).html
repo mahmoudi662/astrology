@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ستاره‌نما - اپلیکیشن طالع‌بینی شخصی</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --dark-blue: #0a1128;
+            --purple: #6d3bb9;
+            --gold: #d4af37;
+            --light-purple: #8e7cc3;
+            --dark-bg: #050517;
+            --card-bg: rgba(13, 27, 62, 0.7);
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-blue) 70%);
+            color: #fff;
+            min-height: 100vh;
+            font-family: Vazirmatn, sans-serif;
+            padding: 0;
+            margin: 0;
+            background-attachment: fixed;
+        }
+        
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .navbar {
+            background: rgba(10, 17, 40, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--purple);
+            padding: 12px 0;
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-weight: 800;
+            font-size: 1.6rem;
+            background: linear-gradient(to right, var(--gold), var(--purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            background: linear-gradient(45deg, var(--purple), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .nav-link {
+            color: #c5c8d9 !important;
+            font-weight: 500;
+            margin: 0 8px;
+            transition: all 0.3s ease;
+            padding: 8px 15px !important;
+            border-radius: 20px;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--gold) !important;
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .hero-section {
+            padding: 30px 0 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--gold), var(--light-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: #c5c8d9;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.7;
+        }
+        
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--purple), var(--light-purple));
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(110, 59, 185, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(110, 59, 185, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--purple);
+            color: var(--light-purple);
+            padding: 10px 23px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(110, 59, 185, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin: 40px 0 30px;
+            font-weight: 700;
+            color: var(--gold);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--gold), var(--purple));
+            border-radius: 3px;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid rgba(110, 59, 185, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--gold), var(--purple));
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .feature-icon {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+        
+        .feature-description {
+            color: #c5c8d9;
+            line-height: 1.7;
+            text-align: justify;
+        }
+        
+        .profile-form {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid rgba(110, 59, 185, 0.3);
+        }
+        
+        .form-label {
+            color: #c5c8d9;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            background: rgba(10, 17, 40, 0.6);
+            border: 1px solid rgba(110, 59, 185, 0.5);
+            color: #fff;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            background: rgba(10, 17, 40, 0.8);
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(110, 59, 185, 0.2);
+            color: #fff;
+        }
+        
+        .profile-list {
+            margin-top: 30px;
+        }
+        
+        .profile-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--purple);
+            transition: all 0.3s ease;
+        }
+        
+        .profile-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+        
+        .profile-info h4 {
+            margin: 0;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+        
+        .profile-info p {
+            margin: 5px 0 0;
+            color: #c5c8d9;
+            font-size: 0.9rem;
+        }
+        
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .profile-btn {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+        
+        footer {
+            background: rgba(10, 17, 40, 0.9);
+            padding: 40px 0 20px;
+            margin-top: 80px;
+            border-top: 1px solid var(--purple);
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        .footer-title {
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--gold);
+        }
+        
+        .footer-links a {
+            color: #c5c8d9;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--gold);
+            transform: translateX(5px);
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 10px;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: var(--purple);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 30px;
+            text-align: center;
+            color: #c5c8d9;
+        }
+        
+        /* استایل‌های جدید برای ویژگی‌های اضافه شده */
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            margin: 30px 0;
+        }
+        
+        .planet-position {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .planet-position:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .planet-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            font-size: 1.2rem;
+            background: var(--purple);
+        }
+        
+        .planet-info {
+            flex-grow: 1;
+        }
+        
+        .planet-name {
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        
+        .planet-zodiac {
+            color: var(--gold);
+            font-size: 0.9rem;
+        }
+        
+        .compatibility-result {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .compatibility-score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin: 20px 0;
+        }
+        
+        .compatibility-details {
+            margin-top: 20px;
+        }
+        
+        .solution-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--gold);
+        }
+        
+        .solution-title {
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .history-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-right: 3px solid var(--purple);
+            transition: all 0.3s ease;
+        }
+        
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .history-date {
+            color: var(--gold);
+            font-weight: 600;
+        }
+        
+        .notification-item {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .notification-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+        
+        .loading-bar {
+            height: 4px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .loading-progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, var(--gold), var(--purple));
+            border-radius: 2px;
+            animation: loading 2s ease-in-out forwards;
+        }
+        
+        .result-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(110, 59, 185, 0.3);
+        }
+        
+        .result-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .result-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .zodiac-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            background: linear-gradient(to right, var(--purple), var(--light-purple));
+            font-weight: 600;
+            margin: 10px 0;
+        }
+        
+        .analysis-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .analysis-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .analysis-list li:hover {
+            background: rgba(255, 255, 255, 0.05);
+            padding-right: 10px;
+        }
+        
+        .analysis-list li:last-child {
+            border-bottom: none;
+        }
+        
+        /* استایل‌های جدید برای بخش تحلیل عدد سرنوشت */
+        .destiny-number {
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            margin: 20px 0;
+        }
+        
+        .destiny-description {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid var(--purple);
+        }
+        
+        .personality-traits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .trait-item {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .trait-item:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .zodiac-info {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+        
+        .zodiac-symbol {
+            font-size: 3rem;
+            margin-left: 20px;
+            color: var(--gold);
+        }
+        
+        .life-path-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .path-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(110, 59, 185, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .path-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .path-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+        
+        .strength-list, .weakness-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .strength-list li, .weakness-list li {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .strength-list li {
+            background: rgba(0, 200, 83, 0.1);
+            border-right: 4px solid #00C853;
+        }
+        
+        .weakness-list li {
+            background: rgba(255, 82, 82, 0.1);
+            border-right: 4px solid #FF5252;
+        }
+        
+        .strength-list li::before, .weakness-list li::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-left: 10px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        
+        .strength-list li::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300C853'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+        }
+        
+        .weakness-list li::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF5252'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3C/svg%3E");
+        }
+        
+        .career-card {
+            background: rgba(30, 136, 229, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-right: 4px solid #1E88E5;
+        }
+        
+        .career-title {
+            color: #1E88E5;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .relationship-card {
+            background: rgba(233, 30, 99, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-right: 4px solid #E91E63;
+        }
+        
+        .relationship-title {
+            color: #E91E63;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        /* انیمیشن‌ها */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes loading {
+            0% { width: 0%; }
+            25% { width: 30%; }
+            50% { width: 60%; }
+            75% { width: 85%; }
+            100% { width: 100%; }
+        }
+        
+        .animated {
+            animation: fadeIn 1s ease-out;
+        }
+        
+        /* طراحی ریسپانسیو */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .feature-card {
+                margin-bottom: 20px;
+            }
+            
+            .chart-container {
+                height: 300px;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-primary, .btn-outline {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .navbar-brand {
+                font-size: 1.4rem;
+            }
+            
+            .logo {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+            
+            .destiny-number {
+                font-size: 3.5rem;
+            }
+            
+            .zodiac-symbol {
+                font-size: 2rem;
+                margin-left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- نوار ناوبری -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="app-container">
+            <a class="navbar-brand" href="#">
+                <div class="logo">س</div>
+                ستاره‌نما
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">خانه</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#profile">پروفایل</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#destiny">عدد سرنوشت</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#personality">تحلیل شخصیت</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#compatibility">سازگاری</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#career">مسیر شغلی</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#birth-chart">چارت تولد</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- بخش اصلی -->
+    <section id="home" class="hero-section">
+        <div class="app-container">
+            <div class="hero-content">
+                <h1 class="hero-title animated">کشف اسرار وجودی خود با ستاره‌نما</h1>
+                <p class="hero-subtitle">اپلیکیشن پیشرفته طالع‌بینی برای تحلیل شخصیت، سرنوشت، مسیر شغلی و عاطفی بر اساس علوم کهن ستاره‌شناسی. با استفاده از دانش باستانی ستاره‌شناسی و ترکیب آن با تکنولوژی مدرن، به شما کمک می‌کنیم تا خود را بهتر بشناسید و از توانایی‌های بالقوه خود استفاده کنید.</p>
+                <div class="hero-actions">
+                    <a href="#profile" class="btn btn-primary">شروع کنید</a>
+                    <a href="#features" class="btn btn-outline">ویژگی‌ها</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش پروفایل و تاریخچه -->
+    <section id="profile" class="app-container">
+        <h2 class="section-title">پروفایل و تاریخچه نتایج</h2>
+        
+        <div class="profile-form">
+            <h3 class="feature-title">ایجاد پروفایل جدید</h3>
+            <p class="feature-description">برای دریافت تحلیل‌های شخصی‌سازی شده، لطفاً اطلاعات خود را وارد کنید. این اطلاعات به صورت کاملاً محرمانه نگهداری خواهد شد.</p>
+            
+            <form id="userProfileForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="fullName" class="form-label">نام کامل</label>
+                        <input type="text" class="form-control" id="fullName" placeholder="نام و نام خانوادگی خود را وارد کنید" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="birthDate" class="form-label">تاریخ تولد</label>
+                        <input type="date" class="form-control" id="birthDate" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="birthTime" class="form-label">زمان تولد</label>
+                        <input type="time" class="form-control" id="birthTime" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="birthPlace" class="form-label">مکان تولد</label>
+                        <input type="text" class="form-control" id="birthPlace" placeholder="شهر و کشور محل تولد" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="gender" class="form-label">جنسیت</label>
+                        <select class="form-control" id="gender" required>
+                            <option value="">انتخاب کنید</option>
+                            <option value="male">مرد</option>
+                            <option value="female">زن</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">ذخیره و محاسبه طالع</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="profile-list" id="profilesList">
+            <h3 class="feature-title">پروفایل‌های ذخیره شده</h3>
+            <p class="feature-description">می‌توانید چندین پروفایل ایجاد کرده و مدیریت کنید.</p>
+            
+            <div id="profilesContainer">
+                <!-- پروفایل‌ها به صورت داینامیک اضافه خواهند شد -->
+            </div>
+        </div>
+        
+        <div id="analysis-section" style="display: none;">
+            <div class="feature-card text-center mt-4">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <h2 class="feature-title">در حال تحلیل اطلاعات شما</h2>
+                <p class="feature-description">لطفاً چند لحظه صبر کنید تا تحلیل‌های شخصی شما آماده شود. این فرآیند شامل محاسبه موقعیت سیارات در زمان تولد شما، تحلیل برج فلکی، محاسبه عدد سرنوشت و بررسی تأثیرات انرژی‌های کیهانی بر زندگی شما می‌شود.</p>
+                
+                <div class="loading-bar">
+                    <div class="loading-progress"></div>
+                </div>
+                
+                <p class="mt-3">پس از اتمام تحلیل، می‌توانید نتایج را در بخش‌های مختلف مشاهده کنید.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش تحلیل عدد سرنوشت -->
+    <section id="destiny" class="app-container">
+        <h2 class="section-title">تحلیل عدد سرنوشت</h2>
+        
+        <div class="feature-card">
+            <h3 class="feature-title">عدد سرنوشت شما چیست؟</h3>
+            <p class="feature-description">عدد سرنوشت یا عدد زندگی، عددی است که از تاریخ تولد شما محاسبه می‌شود و نشان‌دهنده مسیر زندگی، استعدادهای ذاتی و چالش‌هایی است که با آنها روبرو خواهید شد. این عدد به شما کمک می‌کند تا هدف زندگی خود را بهتر درک کنید و تصمیمات بهتری بگیرید.</p>
+            
+            <div class="text-center" id="destinyResult">
+                <p class="feature-description">لطفاً ابتدا پروفایل خود را ایجاد کنید تا تحلیل عدد سرنوشت شما نمایش داده شود.</p>
+            </div>
+        </div>
+        
+        <div class="feature-card mt-4">
+            <h3 class="feature-title">راهکارهای بهبود بر اساس عدد سرنوشت</h3>
+            <p class="feature-description">بر اساس عدد سرنوشت شما، راهکارهای زیر می‌تواند به بهبود زندگی و دستیابی به اهدافتان کمک کند:</p>
+            
+            <div id="improvementTips">
+                <p class="text-center">لطفاً ابتدا پروفایل خود را ایجاد کنید تا راهکارهای بهبود نمایش داده شود.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش تحلیل شخصیت -->
+    <section id="personality" class="app-container">
+        <h2 class="section-title">تحلیل شخصیت و ویژگی‌های فردی</h2>
+        
+        <div class="feature-card">
+            <h3 class="feature-title">ویژگی‌های شخصیتی شما</h3>
+            <p class="feature-description">بر اساس تاریخ تولد و موقعیت ستارگان در زمان تولد شما، تحلیل دقیقی از ویژگی‌های شخصیتی، نقاط قوت و ضعف، استعدادهای پنهان و ویژگی‌های منحصر به فرد شما ارائه می‌دهیم.</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h4 class="feature-title">نقاط قوت شما</h4>
+                    <ul class="strength-list" id="strengthsList">
+                        <li>لطفاً پروفایل خود را ایجاد کنید</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="feature-title">نقاط بهبود شما</h4>
+                    <ul class="weakness-list" id="weaknessesList">
+                        <li>لطفاً پروفایل خود را ایجاد کنید</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <h4 class="feature-title">برج فلکی شما</h4>
+                <div class="zodiac-info" id="zodiacInfo">
+                    <div class="zodiac-symbol">♋</div>
+                    <div>
+                        <h5>لطفاً پروفایل خود را ایجاد کنید</h5>
+                        <p>پس از ایجاد پروفایل، اطلاعات برج فلکی شما نمایش داده خواهد شد.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش سازگاری -->
+    <section id="compatibility" class="app-container">
+        <h2 class="section-title">تحلیل سازگاری و مسیر عاطفی</h2>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="feature-card">
+                    <h3 class="feature-title">بررسی سازگاری شما با دیگران</h3>
+                    <p class="feature-description">اطلاعات فرد مورد نظر را وارد کنید تا میزان سازگاری شما بر اساس طالع ستاره‌ای تحلیل شود. این تحلیل بر اساس مقایسه نمودار تولد شما و فرد مورد نظر انجام می‌شود.</p>
+                    
+                    <div class="mt-4">
+                        <div class="mb-3">
+                            <label class="form-label">نام فرد</label>
+                            <input type="text" class="form-control" id="partnerName" placeholder="نام فرد مورد نظر">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">تاریخ تولد</label>
+                            <input type="date" class="form-control" id="partnerBirthDate">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">جنسیت</label>
+                            <select class="form-control" id="partnerGender">
+                                <option value="">انتخاب کنید</option>
+                                <option value="male">مرد</option>
+                                <option value="female">زن</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="checkCompatibility">بررسی سازگاری</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="feature-card compatibility-result">
+                    <h3 class="feature-title">نتایج سازگاری</h3>
+                    <div class="compatibility-score" id="compatibilityScore">--%</div>
+                    <p class="feature-description" id="compatibilityDescription">لطفاً اطلاعات فرد مورد نظر را وارد کنید.</p>
+                    
+                    <div class="compatibility-details" id="compatibilityDetails" style="display: none;">
+                        <h4 class="feature-title">نقاط قوت رابطه</h4>
+                        <ul id="strengthsList">
+                        </ul>
+                        
+                        <h4 class="feature-title">چالش‌های احتمالی</h4>
+                        <ul id="challengesList">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="feature-card mt-4">
+            <h3 class="feature-title">راهکارهای عملی برای بهبود رابطه</h3>
+            <p class="feature-description">بر اساس تحلیل سازگاری شما، راهکارهای زیر می‌تواند به بهبود رابطه کمک کند:</p>
+            
+            <div class="row mt-3" id="relationshipTips">
+                <div class="col-md-6">
+                    <div class="relationship-card">
+                        <h4 class="relationship-title">ارتباط مؤثر</h4>
+                        <p>یادگیری مهارت‌های ارتباطی مؤثر می‌تواند به حل بسیاری از سوءتفاهم‌ها کمک کند. سعی کنید با احترام به نظرات طرف مقابل گوش دهید و احساسات خود را به صورت شفاف بیان کنید.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="relationship-card">
+                        <h4 class="relationship-title">مدیریت تعارض</h4>
+                        <p>به جای اجتناب از اختلاف نظر، یاد بگیرید که چگونه تعارضات را به صورت سازنده مدیریت کنید. تمرکز بر حل مسئله به جای مقصر دانستن طرف مقابل می‌تواند بسیار مؤثر باشد.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش مسیر شغلی -->
+    <section id="career" class="app-container">
+        <h2 class="section-title">تحلیل مسیر شغلی و حرفه‌ای</h2>
+        
+        <div class="feature-card">
+            <h3 class="feature-title">مسیر شغلی مناسب شما</h3>
+            <p class="feature-description">بر اساس تاریخ تولد و ویژگی‌های شخصیتی شما، مسیرهای شغلی که بیشترین سازگاری را با استعدادها و علایق شما دارند شناسایی شده‌اند.</p>
+            
+            <div class="mt-4" id="careerPaths">
+                <p class="text-center">لطفاً ابتدا پروفایل خود را ایجاد کنید تا تحلیل مسیر شغلی نمایش داده شود.</p>
+            </div>
+        </div>
+        
+        <div class="feature-card mt-4">
+            <h3 class="feature-title">راهکارهای پیشرفت شغلی</h3>
+            <p class="feature-description">برای پیشرفت در مسیر شغلی خود، راهکارهای زیر می‌تواند برای شما مفید باشد:</p>
+            
+            <div class="row mt-3" id="careerTips">
+                <div class="col-md-6">
+                    <div class="career-card">
+                        <h4 class="career-title">توسعه مهارت‌ها</h4>
+                        <p>بر اساس تحلیل شخصیت شما، توسعه مهارت‌های ارتباطی و رهبری می‌تواند به پیشرفت شغلی شما کمک significative کند.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="career-card">
+                        <h4 class="career-title">شبکه‌سازی حرفه‌ای</h4>
+                        <p>ایجاد ارتباطات قوی در حوزه کاری شما می‌تواند فرصت‌های جدیدی را برای پیشرفت شغلی فراهم کند.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش چارت تولد -->
+    <section id="birth-chart" class="app-container">
+        <h2 class="section-title">تحلیل چارت تولد (نمودار نجومی)</h2>
+        
+        <div class="feature-card">
+            <h3 class="feature-title">چارت تولد شما</h3>
+            <p class="feature-description">چارت تولد یا نمودار نجومی شما، نقشه‌ای است که موقعیت دقیق سیارات در زمان و مکان تولدتان را نشان می‌دهد. این نمودار یکی از دقیق‌ترین ابزارهای طالع‌بینی برای تحلیل شخصیت، استعدادها و مسیر زندگی شماست.</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="chart-container">
+                        <canvas id="zodiacChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="feature-title">موقعیت سیارات در زمان تولد شما</h4>
+                    <p class="feature-description">تفسیر موقعیت سیارات در چارت تولد شما می‌تواند بینش عمیقی در مورد ویژگی‌های شخصیتی، نقاط قوت و زمینه‌های رشد شما ارائه دهد.</p>
+                    
+                    <div class="planet-positions" id="planetPositions">
+                        <div class="planet-position">
+                            <div class="planet-icon">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <div class="planet-info">
+                                <div class="planet-name">خورشید - نشان دهنده هویت اصلی و نفس فردی</div>
+                                <div class="planet-zodiac">پس از ایجاد پروفایل، اطلاعات نمایش داده می‌شود</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="feature-card mt-4">
+            <h3 class="feature-title">تفسیر خانه‌های نجومی</h3>
+            <p class="feature-description">خانه‌های نجومی در چارت تولد، زمینه‌های مختلف زندگی شما را نشان می‌دهند. هر خانه مربوط به بخش خاصی از زندگی است و سیارات present در هر خانه، بر آن بخش از زندگی شما تأثیر می‌گذارند.</p>
+            
+            <div class="row mt-3" id="housesInfo">
+                <div class="col-md-6">
+                    <div class="planet-position">
+                        <div class="planet-icon">
+                            <i class="fas fa-1"></i>
+                        </div>
+                        <div class="planet-info">
+                            <div class="planet-name">خانه اول - خود و ظاهر فیزیکی</div>
+                            <div class="planet-zodiac">نحوه ارائه خود به جهان و تصویر اولیه‌ای که دیگران از شما می‌بینند</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="planet-position">
+                        <div class="planet-icon">
+                            <i class="fas fa-2"></i>
+                        </div>
+                        <div class="planet-info">
+                            <div class="planet-name">خانه دوم - ارزش‌ها و دارایی‌ها</div>
+                            <div class="planet-zodiac">نگرش شما نسبت به مالکیت، امنیت مالی و ارزش‌های شخصی</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- پاورقی -->
+    <footer>
+        <div class="app-container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h4 class="footer-title">ستاره‌نما</h4>
+                    <p>کشف اسرار وجودی شما با علوم ستاره‌شناسی و طالع‌بینی مدرن</p>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h4 class="footer-title">لینک‌های مفید</h4>
+                    <div class="footer-links">
+                        <a href="#home">صفحه اصلی</a>
+                        <a href="#profile">پروفایل</a>
+                        <a href="#destiny">عدد سرنوشت</a>
+                        <a href="#personality">تحلیل شخصیت</a>
+                        <a href="#compatibility">سازگاری</a>
+                        <a href="#career">مسیر شغلی</a>
+                        <a href="#birth-chart">چارت تولد</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h4 class="footer-title">تماس با ما</h4>
+                    <div class="footer-links">
+                        <a href="#"><i class="fas fa-envelope me-2"></i> info@setarehnama.com</a>
+                        <a href="#"><i class="fas fa-phone me-2"></i> ۰۲۱-۱۲۳۴۵۶۷۸</a>
+                        <a href="#"><i class="fas fa-map-marker-alt me-2"></i> تهران، ایران</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© ۱۴۰۲ کلیه حقوق برای ستاره‌نما محفوظ است.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // مدیریت پروفایل‌های کاربر
+        let userProfiles = JSON.parse(localStorage.getItem('userProfiles')) || [];
+        let currentProfileIndex = -1;
+        
+        // نمایش پروفایل‌های ذخیره شده
+        function displayProfiles() {
+            const profilesContainer = document.getElementById('profilesContainer');
+            profilesContainer.innerHTML = '';
+            
+            if (userProfiles.length === 0) {
+                profilesContainer.innerHTML = `
+                    <div class="text-center py-4">
+                        <i class="fas fa-user-circle fa-3x mb-3" style="color: #6d3bb9;"></i>
+                        <p>هنوز هیچ پروفایلی ایجاد نکرده‌اید. اولین پروفایل خود را ایجاد کنید.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            userProfiles.forEach((profile, index) => {
+                const profileElement = document.createElement('div');
+                profileElement.className = 'profile-item';
+                profileElement.innerHTML = `
+                    <div class="profile-info">
+                        <h4>${profile.fullName}</h4>
+                        <p>تاریخ تولد: ${profile.birthDate} | جنسیت: ${profile.gender === 'male' ? 'مرد' : 'زن'}</p>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="btn btn-primary btn-sm profile-btn" onclick="loadProfile(${index})">مشاهده</button>
+                        <button class="btn btn-outline btn-sm profile-btn" onclick="deleteProfile(${index})">حذف</button>
+                    </div>
+                `;
+                profilesContainer.appendChild(profileElement);
+            });
+        }
+        
+        // بارگذاری پروفایل
+        function loadProfile(index) {
+            const profile = userProfiles[index];
+            document.getElementById('fullName').value = profile.fullName;
+            document.getElementById('birthDate').value = profile.birthDate;
+            document.getElementById('birthTime').value = profile.birthTime;
+            document.getElementById('birthPlace').value = profile.birthPlace;
+            document.getElementById('gender').value = profile.gender;
+            
+            currentProfileIndex = index;
+            
+            // تحلیل پروفایل
+            analyzeProfile(profile);
+            
+            // اسکرول به بالای فرم
+            document.getElementById('profile').scrollIntoView({ behavior: 'smooth' });
+            
+            // نمایش پیام
+            alert(`پروفایل ${profile.fullName} بارگذاری شد.`);
+        }
+        
+        // حذف پروفایل
+        function deleteProfile(index) {
+            if (confirm('آیا از حذف این پروفایل اطمینان دارید؟')) {
+                userProfiles.splice(index, 1);
+                localStorage.setItem('userProfiles', JSON.stringify(userProfiles));
+                displayProfiles();
+                
+                if (currentProfileIndex === index) {
+                    currentProfileIndex = -1;
+                    document.getElementById('userProfileForm').reset();
+                }
+            }
+        }
+        
+        // تحلیل پروفایل
+        function analyzeProfile(profile) {
+            // نمایش بخش تحلیل
+            document.getElementById('analysis-section').style.display = 'block';
+            
+            // اسکرول به بخش تحلیل
+            document.getElementById('analysis-section').scrollIntoView({ behavior: 'smooth' });
+            
+            // شبیه‌سازی فرآیند تحلیل
+            setTimeout(function() {
+                document.getElementById('analysis-section').style.display = 'none';
+                
+                // محاسبه و نمایش نتایج
+                displayDestinyAnalysis(profile.birthDate);
+                displayPersonalityAnalysis(profile);
+                displayCareerAnalysis(profile);
+                createBirthChart(profile);
+                
+                alert('تحلیل پروفایل با موفقیت انجام شد! می‌توانید نتایج را در بخش‌های مختلف مشاهده کنید.');
+            }, 3000);
+        }
+        
+        // اعتبارسنجی فرم
+        document.getElementById('userProfileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // جمع‌آوری داده‌های فرم
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                birthDate: document.getElementById('birthDate').value,
+                birthTime: document.getElementById('birthTime').value,
+                birthPlace: document.getElementById('birthPlace').value,
+                gender: document.getElementById('gender').value,
+                createdAt: new Date().toISOString()
+            };
+            
+            // بررسی آیا پروفایل قبلاً وجود دارد
+            const existingIndex = userProfiles.findIndex(profile => 
+                profile.fullName === formData.fullName && 
+                profile.birthDate === formData.birthDate
+            );
+            
+            if (existingIndex !== -1) {
+                // به روزرسانی پروفایل موجود
+                userProfiles[existingIndex] = formData;
+                currentProfileIndex = existingIndex;
+            } else {
+                // افزودن پروفایل جدید
+                userProfiles.push(formData);
+                currentProfileIndex = userProfiles.length - 1;
+            }
+            
+            // ذخیره در localStorage
+            localStorage.setItem('userProfiles', JSON.stringify(userProfiles));
+            
+            // نمایش پروفایل‌ها
+            displayProfiles();
+            
+            // تحلیل پروفایل
+            analyzeProfile(formData);
+        });
+        
+        // نمایش تحلیل عدد سرنوشت
+        function displayDestinyAnalysis(birthDate) {
+            const destinyNumber = calculateDestinyNumber(birthDate);
+            const destinyResult = document.getElementById('destinyResult');
+            
+            destinyResult.innerHTML = `
+                <h4 class="feature-title">عدد سرنوشت شما</h4>
+                <div class="destiny-number">${destinyNumber}</div>
+                <div class="destiny-description">
+                    <p>${getDestinyDescription(destinyNumber)}</p>
+                </div>
+            `;
+            
+            // نمایش راهکارهای بهبود
+            const improvementTips = document.getElementById('improvementTips');
+            improvementTips.innerHTML = getImprovementTips(destinyNumber);
+            
+            // اسکرول به بخش تحلیل عدد سرنوشت
+            document.getElementById('destiny').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // نمایش تحلیل شخصیت
+        function displayPersonalityAnalysis(profile) {
+            const zodiacSign = getZodiacSign(profile.birthDate);
+            const personalityTraits = getPersonalityTraits(profile.birthDate);
+            
+            // نمایش برج فلکی
+            const zodiacInfo = document.getElementById('zodiacInfo');
+            zodiacInfo.innerHTML = `
+                <div class="zodiac-symbol">${zodiacSign.symbol}</div>
+                <div>
+                    <h5>برج فلکی: ${zodiacSign.name}</h5>
+                    <p>${zodiacSign.description}</p>
+                </div>
+            `;
+            
+            // نمایش نقاط قوت و ضعف
+            const strengthsList = document.getElementById('strengthsList');
+            const weaknessesList = document.getElementById('weaknessesList');
+            
+            strengthsList.innerHTML = '';
+            weaknessesList.innerHTML = '';
+            
+            personalityTraits.strengths.forEach(strength => {
+                const li = document.createElement('li');
+                li.textContent = strength;
+                strengthsList.appendChild(li);
+            });
+            
+            personalityTraits.weaknesses.forEach(weakness => {
+                const li = document.createElement('li');
+                li.textContent = weakness;
+                weaknessesList.appendChild(li);
+            });
+            
+            // اسکرول به بخش تحلیل شخصیت
+            document.getElementById('personality').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // نمایش تحلیل مسیر شغلی
+        function displayCareerAnalysis(profile) {
+            const destinyNumber = calculateDestinyNumber(profile.birthDate);
+            const zodiacSign = getZodiacSign(profile.birthDate);
+            
+            const careerPaths = document.getElementById('careerPaths');
+            const careerTips = document.getElementById('careerTips');
+            
+            careerPaths.innerHTML = getCareerPaths(destinyNumber, zodiacSign.name);
+            careerTips.innerHTML = getCareerTips(destinyNumber);
+            
+            // اسکرول به بخش مسیر شغلی
+            document.getElementById('career').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // ایجاد چارت تولد
+        function createBirthChart(profile) {
+            const ctx = document.getElementById('zodiacChart').getContext('2d');
+            
+            if (window.zodiacChartInstance) {
+                window.zodiacChartInstance.destroy();
+            }
+            
+            window.zodiacChartInstance = new Chart(ctx, {
+                type: 'polarArea',
+                data: {
+                    labels: ['آتش', 'خاک', 'هوا', 'آب'],
+                    datasets: [{
+                        data: [35, 25, 20, 20],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(255, 205, 86, 0.7)',
+                            'rgba(54, 162, 235, 0.7)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#fff',
+                                font: {
+                                    family: 'Vazirmatn'
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'توزیع عناصر در چارت تولد شما',
+                            color: '#fff',
+                            font: {
+                                family: 'Vazirmatn',
+                                size: 16
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // نمایش موقعیت سیارات
+            const planetPositions = document.getElementById('planetPositions');
+            planetPositions.innerHTML = getPlanetPositions(profile.birthDate);
+            
+            // اسکرول به بخش چارت تولد
+            document.getElementById('birth-chart').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // محاسبه عدد سرنوشت
+        function calculateDestinyNumber(birthDate) {
+            const dateStr = birthDate.replace(/-/g, '');
+            let sum = 0;
+            
+            for (let i = 0; i < dateStr.length; i++) {
+                sum += parseInt(dateStr[i]);
+            }
+            
+            while (sum > 9 && sum !== 11 && sum !== 22 && sum !== 33) {
+                let newSum = 0;
+                while (sum > 0) {
+                    newSum += sum % 10;
+                    sum = Math.floor(sum / 10);
+                }
+                sum = newSum;
+            }
+            
+            return sum;
+        }
+        
+        // دریافت توضیحات عدد سرنوشت
+        function getDestinyDescription(number) {
+            const descriptions = {
+                1: "عدد ۱ نشان‌دهنده رهبری، استقلال و خلاقیت است. شما فردی مبتکر و پیشرو هستید که توانایی شروع پروژه‌های جدید را دارید.",
+                2: "عدد ۲ نشان‌دهنده همکاری، دیپلماسی و حس همدلی است. شما توانایی ایجاد هماهنگی و برقراری ارتباطات قوی را دارید.",
+                3: "عدد ۳ نشان‌دهنده بیان، خلاقیت و شادی است. شما توانایی الهام بخشیدن به دیگران و ایجاد زیبایی در جهان را دارید.",
+                4: "عدد ۴ نشان‌دهنده پایه‌گذاری، ثبات و سازماندهی است. شما توانایی ساختن پایه‌های محکم و قابل اعتماد را دارید.",
+                5: "عدد ۵ نشان‌دهنده آزادی، ماجراجویی و تغییر است. شما توانایی سازگاری با شرایط مختلف و استفاده از فرصت‌ها را دارید.",
+                6: "عدد ۶ نشان‌دهنده مسئولیت، مراقبت و هماهنگی است. شما توانایی ایجاد تعادل و زیبایی در زندگی خود و دیگران را دارید.",
+                7: "عدد ۷ نشان‌دهنده تحلیل، درون‌نگری و خرد است. شما توانایی کشف حقایق عمیق و درک اسرار زندگی را دارید.",
+                8: "عدد ۸ نشان‌دهنده قدرت، موفقیت مادی و مدیریت است. شما توانایی دستیابی به اهداف مادی و ایجاد ثروت را دارید.",
+                9: "عدد ۹ نشان‌دهنده انسان‌دوستی، بخشش و کامل‌شدن است. شما توانایی خدمت به دیگران و ایجاد تغییرات مثبت در جهان را دارید.",
+                11: "عدد ۱۱ یک عدد استاد است و نشان‌دهنده الهام، بینش و روشن‌بینی است. شما توانایی درک حقایق متافیزیکی و الهام بخشیدن به دیگران را دارید.",
+                22: "عدد ۲۲ یک عدد استاد است و نشان‌دهنده سازندگی، مدیریت بزرگ و تحقق رویاها است. شما توانایی تبدیل ایده‌های بزرگ به واقعیت را دارید.",
+                33: "عدد ۳۳ یک عدد استاد است و نشان‌دهنده آموزش، شفابخشی و خدمت به بشریت است. شما توانایی بهبود دیگران و ایجاد تغییرات مثبت در مقیاس بزرگ را دارید."
+            };
+            
+            return descriptions[number] || "عدد سرنوشت شما منحصر به فرد است و ویژگی‌های خاص خود را دارد.";
+        }
+        
+        // دریافت راهکارهای بهبود
+        function getImprovementTips(number) {
+            const tips = {
+                1: `
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <div class="solution-card">
+                                <h4 class="solution-title">تمرین رهبری</h4>
+                                <p>برای تقویت مهارت‌های رهبری خود، در موقعیت‌های مختلف مسئولیت پذیرفته و تصمیم‌گیری کنید.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="solution-card">
+                                <h4 class="solution-title">پرورش خلاقیت</h4>
+                                <p>با انجام فعالیت‌های هنری و فکری، خلاقیت ذاتی خود را تقویت کنید.</p>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                2: `
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <div class="solution-card">
+                                <h4 class="solution-title">تقویت دیپلماسی</h4>
+                                <p>در روابط خود، مهارت‌های مذاکره و میانجی‌گری را تقویت کنید.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="solution-card">
+                                <h4 class="solution-title">همدلی بیشتر</h4>
+                                <p>سعی کنید احساسات دیگران را بهتر درک کرده و با آن‌ها همدلی کنید.</p>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                // سایر اعداد...
+            };
+            
+            return tips[number] || `
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="solution-card">
+                            <h4 class="solution-title">تمرین مدیتیشن</h4>
+                            <p>با تمرین مدیتیشن روزانه، آرامش درونی خود را افزایش دهید.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="solution-card">
+                            <h4 class="solution-title">تعیین اهداف</h4>
+                            <p>اهداف واضح و مشخصی برای زندگی خود تعیین کرده و برای رسیدن به آن‌ها برنامه‌ریزی کنید.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // تعیین برج فلکی بر اساس تاریخ تولد
+        function getZodiacSign(birthDate) {
+            const date = new Date(birthDate);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            
+            if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) 
+                return { name: 'حمل', symbol: '♈', description: 'متولدین برج حمل پرانرژی، جسور و پیشرو هستند. شما دارای روحیه ماجراجویی و ابتکار عمل هستید و همیشه آماده شروع کارهای جدیدید.' };
+            if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) 
+                return { name: 'ثور', symbol: '♉', description: 'متولدین برج ثور پایدار، قابل اعتماد و اهل لذت‌های مادی هستند. شما ارزش زیادی برای امنیت و راحتی قائلید و فردی عملی و واقع‌بین هستید.' };
+            if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) 
+                return { name: 'جوزا', symbol: '♊', description: 'متولدین برج جوزا کنجکاو، باهوش و اجتماعی هستند. شما توانایی ارتباطی فوق‌العاده‌ای دارید و همیشه به دنبال یادگیری چیزهای جدید هستید.' };
+            if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) 
+                return { name: 'سرطان', symbol: '♋', description: 'متولدین برج سرطان احساسی، شهودی و مراقب هستند. شما ارزش زیادی برای خانواده و خانه قائلید و فردی دلسوز و محافظ هستید.' };
+            if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) 
+                return { name: 'اسد', symbol: '♌', description: 'متولدین برج اسد خلاق، پرشور و سخاوتمند هستند. شما عاشق مرکز توجه بودن هستید و توانایی رهبری و الهام بخشیدن به دیگران را دارید.' };
+            if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) 
+                return { name: 'سنبله', symbol: '♍', description: 'متولدین برج سنبله تحلیل‌گر، دقیق و سخت‌کوش هستند. شما به جزئیات توجه زیادی دارید و فردی منظم و عملی هستید.' };
+            if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) 
+                return { name: 'میزان', symbol: '♎', description: 'متولدین برج میزان دیپلماتیک، خوش‌سلیقه و عادل هستند. شما به دنبال ایجاد تعادل و هماهنگی در زندگی هستید و ارزش زیادی برای روابط قائلید.' };
+            if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) 
+                return { name: 'عقرب', symbol: '♏', description: 'متولدین برج عقرب پرشور، مصمم و resourceful هستند. شما توانایی درک عمیق مسائل را دارید و فردی با اراده قوی و شهودی هستید.' };
+            if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) 
+                return { name: 'قوس', symbol: '♐', description: 'متولدین برج قوس خوشبین، ماجراجو و فیلسوف هستند. شما عاشق آزادی و کشف ناشناخته‌ها هستید و فردی حقیقت‌جو و broad-minded هستید.' };
+            if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) 
+                return { name: 'جدی', symbol: '♑', description: 'متولدین برج جدی مسئولیت‌پذیر، منظم و بلندپرواز هستند. شما ارزش زیادی برای سخت‌کوشی و موفقیت قائلید و فردی منضبط و عملی هستید.' };
+            if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) 
+                return { name: 'دلو', symbol: '♒', description: 'متولدین برج دلو مستقل، نوآور و انسان‌دوست هستند. شما ایده‌های پیشرفته‌ای دارید و فردی پیشرو و علاقه‌مند به جامعه هستید.' };
+            if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) 
+                return { name: 'حوت', symbol: '♓', description: 'متولدین برج حوت دلسوز، هنرمند و شهودی هستند. شما توانایی درک عمیق احساسات را دارید و فردی دلسوز و خلاق هستید.' };
+            
+            return { name: 'نامشخص', symbol: '', description: 'تاریخ تولد معتبر نیست' };
+        }
+        
+        // دریافت ویژگی‌های شخصیتی
+        function getPersonalityTraits(birthDate) {
+            const zodiacSign = getZodiacSign(birthDate).name;
+            
+            const traits = {
+                'حمل': {
+                    strengths: ['شجاع', 'پرانرژی', 'پیشرو', 'صریح', 'مستقل'],
+                    weaknesses: ['عجول', 'بی‌طاقت', 'خودمحور', 'بی‌دقت']
+                },
+                'ثور': {
+                    strengths: ['قابل اعتماد', 'صبور', 'عملی', 'وفادار', 'قدرتمند'],
+                    weaknesses: ['لجباز', 'مقاوم در برابر تغییر', 'مالی‌خواه', 'خودخواه']
+                },
+                'جوزا': {
+                    strengths: ['باهوش', 'کنجکاو', 'انعطاف‌پذیر', 'اجتماعی', 'بیان‌گر'],
+                    weaknesses: ['بی‌ثبات', 'اضطرابی', 'غیرقابل پیش‌بینی', 'سطحی']
+                },
+                // سایر برج‌ها...
+            };
+            
+            return traits[zodiacSign] || {
+                strengths: ['خلاق', 'دلسوز', 'صبور', 'بااستعداد'],
+                weaknesses: ['حساس', 'کمال‌گرا', 'ترسو', 'نامطمئن']
+            };
+        }
+        
+        // دریافت مسیرهای شغلی
+        function getCareerPaths(destinyNumber, zodiacSign) {
+            const paths = {
+                1: `<p>شما در نقش‌های رهبری و مدیریتی excel می‌کنید. مشاغلی مانند مدیرعامل، کارآفرین، رهبر تیم یا مشاور مدیریت برای شما مناسب هستند.</p>`,
+                2: `<p>شما در مشاغلی که نیاز به همکاری و دیپلماسی دارند موفق خواهید بود. مشاغلی مانند مشاور، دیپلمات، مددکار اجتماعی یا منابع انسانی برای شما مناسب هستند.</p>`,
+                // سایر اعداد...
+            };
+            
+            return paths[destinyNumber] || `<p>شما در مشاغلی که نیاز به خلاقیت و ارتباط با مردم دارند موفق خواهید بود. مشاغلی مانند طراحی، آموزش، مشاوره یا هنر برای شما مناسب هستند.</p>`;
+        }
+        
+        // دریافت راهکارهای شغلی
+        function getCareerTips(destinyNumber) {
+            const tips = {
+                1: `
+                    <div class="col-md-6">
+                        <div class="career-card">
+                            <h4 class="career-title">توسعه مهارت‌های رهبری</h4>
+                            <p>با شرکت در دوره‌های مدیریت و رهبری، مهارت‌های خود را در این زمینه تقویت کنید.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="career-card">
+                            <h4 class="career-title">شبکه‌سازی حرفه‌ای</h4>
+                            <p>با افراد موفق در حوزه کاری خود ارتباط برقرار کرده و از تجربیات آن‌ها استفاده کنید.</p>
+                        </div>
+                    </div>
+                `,
+                2: `
+                    <div class="col-md-6">
+                        <div class="career-card">
+                            <h4 class="career-title">تقویت مهارت‌های ارتباطی</h4>
+                            <p>مهارت‌های گوش دادن و گفتگوی خود را تقویت کنید تا در نقش میانجی بهتر عمل کنید.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="career-card">
+                            <h4 class="career-title">یادگیری مذاکره</h4>
+                            <p>با یادگیری اصول مذاکره، توانایی خود در حل تعارضات را افزایش دهید.</p>
+                        </div>
+                    </div>
+                `,
+                // سایر اعداد...
+            };
+            
+            return tips[destinyNumber] || `
+                <div class="col-md-6">
+                    <div class="career-card">
+                        <h4 class="career-title">توسعه مهارت‌های نرم</h4>
+                        <p>مهارت‌های ارتباطی، teamwork و حل مسئله را در خود تقویت کنید.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="career-card">
+                        <h4 class="career-title">یادگیری مستمر</h4>
+                        <p>همیشه به دنبال یادگیری چیزهای جدید باشید و دانش خود را به روز نگه دارید.</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // دریافت موقعیت سیارات
+        function getPlanetPositions(birthDate) {
+            return `
+                <div class="planet-position">
+                    <div class="planet-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <div class="planet-info">
+                        <div class="planet-name">خورشید - نشان دهنده هویت اصلی و نفس فردی</div>
+                        <div class="planet-zodiac">در برج ${getZodiacSign(birthDate).name} - بیانگر خلاقیت و رهبری</div>
+                    </div>
+                </div>
+                <div class="planet-position">
+                    <div class="planet-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <div class="planet-info">
+                        <div class="planet-name">ماه - نشان دهنده احساسات و ناخودآگاه</div>
+                        <div class="planet-zodiac">در برج سرطان - بیانگر حساسیت و نیاز به امنیت</div>
+                    </div>
+                </div>
+                <div class="planet-position">
+                    <div class="planet-icon">
+                        <i class="fas fa-venus"></i>
+                    </div>
+                    <div class="planet-info">
+                        <div class="planet-name">زهره - نشان دهنده عشق، ارزش‌ها و زیبایی</div>
+                        <div class="planet-zodiac">در برج میزان - بیانگر تعادل و هماهنگی در روابط</div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // بررسی سازگاری
+        document.getElementById('checkCompatibility').addEventListener('click', function() {
+            const partnerName = document.getElementById('partnerName').value;
+            const partnerBirthDate = document.getElementById('partnerBirthDate').value;
+            
+            if (!partnerName || !partnerBirthDate) {
+                alert('لطفاً نام و تاریخ تولد فرد مورد نظر را وارد کنید.');
+                return;
+            }
+            
+            if (currentProfileIndex === -1) {
+                alert('لطفاً ابتدا پروفایل خود را ایجاد کنید.');
+                return;
+            }
+            
+            // محاسبه سازگاری بر اساس تاریخ تولد
+            const compatibility = calculateCompatibility(partnerBirthDate);
+            
+            // نمایش نتایج
+            document.getElementById('compatibilityScore').textContent = `${compatibility.score}%`;
+            document.getElementById('compatibilityDescription').textContent = `سازگاری شما با ${partnerName}: ${compatibility.description}`;
+            
+            // نمایش جزئیات
+            const strengthsList = document.getElementById('strengthsList');
+            const challengesList = document.getElementById('challengesList');
+            
+            strengthsList.innerHTML = '';
+            challengesList.innerHTML = '';
+            
+            compatibility.strengths.forEach(strength => {
+                const li = document.createElement('li');
+                li.textContent = strength;
+                strengthsList.appendChild(li);
+            });
+            
+            compatibility.challenges.forEach(challenge => {
+                const li = document.createElement('li');
+                li.textContent = challenge;
+                challengesList.appendChild(li);
+            });
+            
+            document.getElementById('compatibilityDetails').style.display = 'block';
+        });
+        
+        // محاسبه سازگاری
+        function calculateCompatibility(partnerBirthDate) {
+            const userProfile = userProfiles[currentProfileIndex];
+            
+            // محاسبه عدد سرنوشت کاربر و شریک
+            const userDestiny = calculateDestinyNumber(userProfile.birthDate);
+            const partnerDestiny = calculateDestinyNumber(partnerBirthDate);
+            
+            // محاسبه درصد سازگاری بر اساس تفاوت اعداد سرنوشت
+            const destinyDiff = Math.abs(userDestiny - partnerDestiny);
+            let score = 100 - (destinyDiff * 10);
+            score = Math.max(30, Math.min(score, 95)); // محدود کردن بازه بین ۳۰ تا ۹۵
+            
+            // تولید نتایج بر اساس درصد سازگاری
+            let description, strengths, challenges;
+            
+            if (score >= 80) {
+                description = 'سازگاری بسیار خوبی دارید. رابطه شما پتانسیل رشد و تعالی دارد.';
+                strengths = ['تفاهم عاطفی بالا', 'اهداف مشترک زندگی', 'ارزش‌های مشابه', 'مکمل یکدیگر بودن'];
+                challenges = ['تفاوت در روش‌های ارتباطی', 'الگوهای مختلف تصمیم‌گیری'];
+            } else if (score >= 60) {
+                description = 'سازگاری نسبتاً خوبی دارید. با تلاش و درک متقابل می‌توانید رابطه موفقی داشته باشید.';
+                strengths = ['علایق مشترک', 'توانایی حل تعارض', 'احترام متقابل'];
+                challenges = ['تفاوت در اولویت‌ها', 'نیاز به سازگاری بیشتر', 'تفاوت در سبک زندگی'];
+            } else {
+                description = 'چالش‌های بیشتری در رابطه دارید. برای موفقیت رابطه به تلاش و درک بیشتری نیاز دارید.';
+                strengths = ['فرصت رشد شخصی', 'یادگیری از تفاوت‌ها'];
+                challenges = ['تفاوت در ارزش‌های اساسی', 'سبک‌های ارتباطی متفاوت', 'اولویت‌های زندگی مختلف'];
+            }
+            
+            return {
+                score: score,
+                description: description,
+                strengths: strengths,
+                challenges: challenges
+            };
+        }
+        
+        // بارگذاری داده‌های ذخیره شده
+        document.addEventListener('DOMContentLoaded', function() {
+            // نمایش پروفایل‌های ذخیره شده
+            displayProfiles();
+            
+            // افزودن انیمیشن به المان‌ها هنگام اسکرول
+            const animatedElements = document.querySelectorAll('.animated');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                    }
+                });
+            });
+            
+            animatedElements.forEach(element => {
+                element.style.opacity = 0;
+                element.style.transition = 'opacity 0.8s ease-out';
+                observer.observe(element);
+            });
+            
+            // مدیریت navigation active
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+            
+            window.addEventListener('scroll', function() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
